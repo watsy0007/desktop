@@ -83,7 +83,7 @@ defmodule Desktop.MixProject do
     ]
 
     if Mix.target() in [:android, :ios] do
-      desktop ++ [{:wx, "~> 1.0", hex: :bridge, targets: [:android, :ios]}]
+      desktop ++ [{:wx, "~> 1.0", github: "elixir-desktop/bridge", hex: :bridge, targets: [:android, :ios]}]
     else
       desktop
     end
