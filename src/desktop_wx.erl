@@ -1,5 +1,5 @@
   -module(desktop_wx).
-  -include_lib("wx/include/wx.hrl").
+  -include_lib("bridge/include/wx.hrl").
   -export([get/1]).
 
   get(wxDEFAULT_FRAME_STYLE) -> ?wxDEFAULT_FRAME_STYLE;
