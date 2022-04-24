@@ -83,6 +83,7 @@ mkdir ~/projects && cd ~/projects
 git clone https://github.com/wxWidgets/wxWidgets.git
 cd wxWidgets
 git checkout master
+git submodule update --init
 ./configure --prefix=/usr/local/wxWidgets --enable-clipboard --enable-controls \
       --enable-dataviewctrl --enable-display \
       --enable-dnd --enable-graphics_ctx \
