@@ -13,6 +13,12 @@ defmodule Desktop.Menu.Parser do
   def parse(string) when is_list(string) or is_binary(string) do
     string = :unicode.characters_to_binary(string)
 
+    if System.get_env("TRACE_MENU") do
+      {millis, _} = :erlang.statistics(:wall_clock)
+      trace = "=== TRACE #{millis} ===\n" <> String.trim(string) <> "\n"
+      File.write("menu_trace.xml", trace, [:append])
+    end
+
     try do
       HTMLTokenizer.tokenize(string, "generated", 0, [])
       # 'simple-form' is what xmerl documentation calls a tree of tuples:
@@ -144,7 +150,14 @@ defmodule Desktop.Menu.Parser do
     Enum.filter(content, &(not is_binary(&1)))
   end
 
-  defp error(message, meta \\ %{line: 0, column: 0}) do
+  @type meta :: %{
+          line: non_neg_integer(),
+          column: non_neg_integer()
+        }
+
+  @spec error(String.t()) :: no_return()
+  @spec error(String.t(), meta()) :: no_return()
+  def error(message, meta \\ %{line: 0, column: 0}) do
     raise ParseError, file: "unknown", line: meta.line, column: meta.column, description: message
   end
 
